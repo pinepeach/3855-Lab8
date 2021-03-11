@@ -9,8 +9,8 @@ import requests
 import logging
 import logging.config
 
-MAX_EVENTS = 10
-EVENT_FILE = "events.json"
+# MAX_EVENTS = 10
+# EVENT_FILE = "events.json"
 
 with open('app_conf.yml', 'r') as f:
     app_config = yaml.safe_load(f.read())
@@ -29,7 +29,7 @@ def record_completed_sales(body):
     logger.info("Returned event sales request with a unique id of" + str(body["title"]))
     logger.info("Returned event sales response (Id:" + str(body["title"]) + ") with status " + str(status_code))
 
-    record_last_ten(body)
+#    record_last_ten(body)
 
     client = KafkaClient(hosts="%s:%d" % (app_config["events"]["hostname"],
                           app_config["events"]["port"]))
@@ -47,7 +47,7 @@ def record_completed_sales(body):
 
 def record_completed_returns(body):
     """Creates a list of recent posted return and stores them in a json file"""
-    record_last_ten(body)
+#    record_last_ten(body)
     # status_code = requests.post(app_config['eventstore2']['url'], json=body).status_code
     status_code = 201
 
@@ -69,26 +69,26 @@ def record_completed_returns(body):
 
 
 
-def record_last_ten(body):
-    """Records the last ten posts into the json file"""
-    LIST = []
-    # Adds any existing content from the json file into the list
-    read_file = open(EVENT_FILE, "r")
-    read_lines = read_file.readlines()
-    for lines in read_lines:
-        LIST.append(lines.rstrip("\n"))
-    read_file.close()
+# def record_last_ten(body):
+#     """Records the last ten posts into the json file"""
+#     LIST = []
+#     # Adds any existing content from the json file into the list
+#     read_file = open(EVENT_FILE, "r")
+#     read_lines = read_file.readlines()
+#     for lines in read_lines:
+#         LIST.append(lines.rstrip("\n"))
+#     read_file.close()
 
-    # Makes sure the list does not exceed max number of events
-    while len(LIST) >= MAX_EVENTS:
-        LIST.pop(0)
-    LIST.append(body)
+#     # Makes sure the list does not exceed max number of events
+#     while len(LIST) >= MAX_EVENTS:
+#         LIST.pop(0)
+#     LIST.append(body)
 
-    write_file = open(EVENT_FILE, "w")
-    for events in LIST:
-        write_file.write(str(events) + "\n")
-    write_file.close()
-    return NoContent, 201
+#     write_file = open(EVENT_FILE, "w")
+#     for events in LIST:
+#         write_file.write(str(events) + "\n")
+#     write_file.close()
+#     return NoContent, 201
 
 
 

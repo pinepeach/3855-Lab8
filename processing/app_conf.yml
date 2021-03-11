@@ -4,6 +4,6 @@ datastore:
 scheduler:
   period_sec: 5
 eventstore1:
-  url: http://localhost:8090/get/completed/sales
+  url: http://architect.eastus2.cloudapp.azure.com:8090/get/completed/sales
 eventstore2:
-  url: http://localhost:8090/get/completed/returns
+  url: http://architect.eastus2.cloudapp.azure.com:8090/get/completed/returns
