@@ -23,10 +23,10 @@ with open('log_conf.yml', 'r') as f:
 
 logger = logging.getLogger('basicLogger')
 
-DB_ENGINE = create_engine(
-    'mysql+pymysql://' + app_config['datastore']['user'] + ':' + app_config['datastore']['password'] + '@' +
-    app_config['datastore']['hostname'] + ':' + str(app_config['datastore']['port']) + '/' + app_config['datastore'][
-        'db'])
+# DB_ENGINE = create_engine(
+#     'mysql+pymysql://' + app_config['datastore']['user'] + ':' + app_config['datastore']['password'] + '@' +
+#     app_config['datastore']['hostname'] + ':' + str(app_config['datastore']['port']) + '/' + app_config['datastore'][
+#         'db'])
 
 # Base.metadata.bind = DB_ENGINE
 # DB_SESSION = sessionmaker(bind=DB_ENGINE)
