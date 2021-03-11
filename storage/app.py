@@ -6,8 +6,8 @@ from pykafka import KafkaClient
 from pykafka.common import OffsetType
 from threading import Thread
 import yaml
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+#from sqlalchemy import create_engine
+#from sqlalchemy.orm import sessionmaker
 from base import Base
 from sale import Sale
 from returns import Return
