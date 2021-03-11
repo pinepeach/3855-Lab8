@@ -5,7 +5,7 @@ eventstore2:
   url: http://localhost:8090/completed/returns
 datastore:
  user: "user"
- password: "password"
+ password: 
  hostname: "architect.eastus2.cloudapp.azure.com"
  port: 3306
  db: "events"
