@@ -1,0 +1,124 @@
+openapi: 3.0.0
+info:
+  description: This receives data from POS systems
+  version: "1.0.0"
+  title: Simple Inventory API
+  contact:
+    email: jasonquach1234@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: transaction
+paths:
+  /stat:
+    get:
+      tags:
+        - transaction
+      summary: Shows completed transactions
+      operationId: app.get_stats
+      description: Shows total transactions
+      parameters:
+        - name: timestamp
+          in: query
+          description: Limits the number of items on a page
+          schema:
+            type: object
+            format: date-time
+            example: 2016-08-29T09:12:33.001Z
+      responses:
+        '200':
+          description: Successfully returned a list completed transactions
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ReadingStat'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+components:
+  schemas:
+    ReadingStat:
+      required:
+        - title
+        - gcid
+        - sale_product
+        - return_product
+      properties:
+        title:
+          type: string
+          example: Sale
+        gcid:
+          $ref: '#/components/schemas/GCID'
+        sale_product:
+          $ref: '#/components/schemas/SaleProduct'
+        return_product:
+          $ref: '#/components/schemas/ReturnProduct'
+      type: object
+
+    GCID:
+      required:
+        - store
+        - till_number
+        - transaction_number
+        - date
+      properties:
+        store:
+          type: integer
+          example: 125
+        till_number:
+          type: integer
+          example: 5
+        transaction_number:
+          type: integer
+          example: 2050
+        date:
+          type: string
+          format: mm-dd-yyyy
+          example: 08-12-2020
+      type: object
+
+    SaleProduct:
+      required:
+        - sku
+        - name
+        - price
+      properties:
+        sku:
+          type: integer
+          format: uid
+          example: 17812516
+        name:
+          type: string
+          example: Airpods
+        price:
+          type: string
+          example: $119.99
+      type: object
+
+    ReturnProduct:
+      required:
+        - sku
+        - name
+        - reason
+      properties:
+        sku:
+          type: integer
+          format: uid
+          example: 17812516
+        name:
+          type: string
+          example: Airpods
+        reason:
+          type: string
+          example: broken in one ear
+      type: object

@@ -1,0 +1,15 @@
+version: 1
+eventstore1:
+  url: http://localhost:8090/completed/sales
+eventstore2:
+  url: http://localhost:8090/completed/returns
+datastore:
+ user: "user"
+ password: "password"
+ hostname: "architect.eastus2.cloudapp.azure.com"
+ port: 3306
+ db: "events"
+events:
+ hostname: architect.eastus2.cloudapp.azure.com
+ port: 9092
+ topic: events

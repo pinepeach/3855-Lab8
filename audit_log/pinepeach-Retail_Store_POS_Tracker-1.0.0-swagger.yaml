@@ -1,0 +1,186 @@
+openapi: 3.0.0
+info:
+  description: This receives data from POS systems
+  version: "1.0.0"
+  title: Simple Inventory API
+  contact:
+    email: jasonquach1234@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: transaction
+paths:
+  /get/completed/sales:
+    get:
+      tags:
+        - transaction
+      summary: Shows completed sale
+      operationId: app.get_completed_sales
+      description: Shows total sales
+      parameters:
+        - name: index
+          in: query
+          description: Limits the number of items on a page
+          schema:
+            type: integer
+            example: 100
+      responses:
+        '200':
+          description: Successfully returned a list completed sales
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/CompletedSale'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /get/completed/returns:
+    get:
+      tags:
+        - transaction
+      summary: Shows completed returns
+      operationId: app.get_completed_returns
+      description: Shows total completed returns
+      parameters:
+        - name: index
+          in: query
+          description: Limits the number of items on a page
+          schema:
+            type: integer
+            example: 1000
+      responses:
+        '200':
+          description: Successfully returned a list of completed returns
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/CompletedReturn'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        
+components:
+  schemas:
+    CompletedSale:
+      required:
+        - title
+        - gcid
+        - sale_product
+      properties:
+        title:
+          type: string
+          example: Sale
+        gcid:
+          $ref: '#/components/schemas/GCID'
+        sale_product:
+          $ref: '#/components/schemas/SaleProduct'
+      type: object
+      
+    CompletedReturn:
+      required:
+        - title
+        - gcid
+        - return_product
+      properties:
+        title:
+          type: string
+          example: Return
+        gcid:
+          $ref: '#/components/schemas/GCID'
+        return_product:
+          $ref: '#/components/schemas/ReturnProduct'
+      type: object
+    
+    GCID:
+      required:
+        - store
+        - till_number
+        - transaction_number
+        - date
+      properties:
+        store:
+          type: integer
+          example: 125
+        till_number:
+          type: integer
+          example: 5
+        transaction_number:
+          type: integer
+          example: 2050
+        date:
+          type: string
+          format: mm-dd-yyyy
+          example: 08-12-2020
+      type: object
+      
+    SaleProduct:
+      required: 
+        - sku
+        - name
+        - price
+      properties:
+        sku:
+          type: integer
+          format: uid
+          example: 17812516
+        name:
+          type: string
+          example: Airpods
+        price:
+          type: string
+          example: $119.99
+      type: object
+      
+    ReturnProduct:
+      required: 
+        - sku
+        - name
+        - reason
+      properties:
+        sku:
+          type: integer
+          format: uid
+          example: 17812516
+        name:
+          type: string
+          example: Airpods
+        reason:
+          type: string
+          example: broken in one ear
+      type: object
