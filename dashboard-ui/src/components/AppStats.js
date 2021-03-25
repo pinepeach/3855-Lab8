@@ -39,15 +39,15 @@ export default function AppStats() {
 							<th>returns</th>
 						</tr>
 						<tr>
+                            <td># sale_product: {stats['sale_product']}</td>
 							<td># return_product: {stats['return_product']}</td>
-							<td># sale_product: {stats['sale_product']}</td>
 						</tr>
-						<tr>
+						{/* <tr>
 							<td colspan="2">gcid: {stats['gcid']}</td>
 						</tr>
 						<tr>
 							<td colspan="2">title: {stats['title']}</td>
-						</tr>
+						</tr> */}
 					</tbody>
                 </table>
                 <h3>timestamp: {stats['timestamp']}</h3>
