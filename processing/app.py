@@ -8,6 +8,7 @@ import datetime
 import json
 from apscheduler.schedulers.background import BackgroundScheduler
 import requests
+from flask_cors import CORS, cross_origin
 
 with open('app_conf.yml', 'r') as f:
     app_config = yaml.safe_load(f.read())
@@ -88,6 +89,8 @@ def init_scheduler():
 
 
 app = connexion.FlaskApp(__name__, specification_dir='')
+CORS(app.app)
+app.app.config['CORS_HEADERS'] = 'Content-Type'
 app.add_api("pinepeach-Retail_Store_POS_Tracker-1.0.0-swagger.yaml",
             strict_validation=True,
             validate_responses=True)

@@ -12,6 +12,7 @@ from pykafka import KafkaClient
 from pykafka.common import OffsetType
 from threading import Thread
 import json
+from flask_cors import CORS, cross_origin
 
 # DB_ENGINE = create_engine("sqlite:///readings.sqlite")
 with open('app_conf.yml', 'r') as f:
@@ -82,9 +83,12 @@ def get_completed_returns(index):
 
 
 app = connexion.FlaskApp(__name__, specification_dir='')
+CORS(app.app)
+app.app.config['CORS_HEADERS'] = 'Content-Type'
 app.add_api("pinepeach-Retail_Store_POS_Tracker-1.0.0-swagger.yaml",
             strict_validation=True,
             validate_responses=True)
+            
 
 if __name__ == "__main__":
     logger.info(
